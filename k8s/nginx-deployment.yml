@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.23.1
+        image: eydscasandbox.azurecr.io/milestones/custom-nginx:latest
         ports:
         - containerPort: 80
