@@ -3,7 +3,7 @@ http {
   server {
       listen       80;
       location / {
-          return 200 'gangnam style!';
+          return 200 '$MESSAGE';
       }
   }
 }
