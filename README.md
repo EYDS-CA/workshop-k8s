@@ -31,3 +31,37 @@ metadata:
 - Next we need to get GitHub Actions working so this deploys in CI/CD. First step is to create your own personal GitHub repo for this project and copy your files into it. 
 - You'll first need to add two GitHub secrets. `NAMESPACE`, which should be the name of your kubernetes namespace on the cluster. `KUBE_CONFIG` should be the contents of `~/.kube/config` on your local machine - this has your credentials to connect to the cluster.
 - The file at `.github/workflows/deploy.yml` is set-up to deploy when the `dev` tag is attached to a commit. Attach the `dev` tag to your latest commit and push it. You should see everything deploy automatically in GitHub Actions for your repo!
+
+
+## Milestone 2
+
+### Goals
+- Deploy a custom docker image to our Azure Container Registry repository as part of your build pipeline.
+- Use this docker image in place of your existing one for your web service.
+- Add a Kubernetes Secret and supply it to this pod somehow.
+
+### Steps
+- Add a custom Dockerfile for your new image. We have created one in this repo at `services/custom-nginx`.
+- Log-in to the Azure Container Registry we are using with the command `docker login eydscasandbox.azurecr.io`. Username and password can be found in the Azure portal for this registry under "Access Keys".
+- See the `nginx-build` and `nginx-push` commands in the makefile for building your new docker image and pushing it to the Azure repository.
+- Replace the docker image in your kubernetes deployment file with this new image, e.g. `eydscasandbox.azurecr.io/milestones/custom-nginx:latest`.
+- Run the pipeline to test that this new image can be successfully deployed.
+- Add a build and deploy step for your new image into your GitHub workflow file, before the kubernetes deployment, so the image is built and pushed as part of the pipeline.
+- Add a secret to your namespace using e.g. `kubectl create secret generic nginx-message --from-literal=message='Hello World!'` will create a secret called `nginx-message` with the key `message` set to the value `Hello World!`.
+- Apply this secret as an environment variable to your deployed pod using this syntax:
+```
+spec:
+  containers:
+  - name: nginx
+    image: eydscasandbox.azurecr.io/milestones/custom-nginx:latest
+    ports:
+    - containerPort: 80
+    env:
+    - name: MESSAGE
+      valueFrom:
+        secretKeyRef:
+          name: nginx-message
+          key: message
+          optional: false
+```
+- Find a way to get this secret to influence the behaviour of your docker container, so that you know it is being accessed properly. For example, in this repo we are templating the nginx config file with a response message given by the `$MESSAGE` environment variable.
