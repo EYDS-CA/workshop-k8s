@@ -3,8 +3,8 @@ on:
   push:
     branches:
       # Typically for tag-based deployment you would have one tag per environment, e.g. dev/test/prod
-      - milestone1
-      - milestone2
+      - milestone-1
+      - milestone-2
   workflow_dispatch:
 env:
   # Please change this to the name of your kubernetes namespace
