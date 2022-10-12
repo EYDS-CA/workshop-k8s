@@ -1,10 +1,11 @@
 name: Deploy
-on: 
+on:
   push:
-    tags: 
-    # Typically for tag-based deployment you would have one tag per environment, e.g. dev/test/prod
-      - dev
-
+    branches:
+      # Typically for tag-based deployment you would have one tag per environment, e.g. dev/test/prod
+      - milestone1
+      - milestone2
+  workflow_dispatch:
 env:
   # Please change this to the name of your kubernetes namespace
   NAMESPACE: ${{ secrets.NAMESPACE }}
