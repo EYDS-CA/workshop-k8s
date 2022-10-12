@@ -1,4 +1,4 @@
-
+include .env
 ifndef NAMESPACE
 $(error NAMESPACE env var not set)
 endif
