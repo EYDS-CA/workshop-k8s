@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scaledown
+spec:
+  # at 8pm, shut down
+  schedule: '00 20 * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scaledown
+              image: busybox:1.28
+              imagePullPolicy: IfNotPresent
+              command:
+                - <insert way to run scaledown.sh>
+              volumeMounts:
+                # This needs to be created
+                - name: scripts-dir
+                  mountPath: /scripts
+          restartPolicy: OnFailure
+          volumes:
+            # This needs to be created
+            - name: script-dir
+              hostPath:
+                path: /scripts
+                type: Directory
+              restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scaleup
+spec:
+  # at 8am, scale shared resources back to 1 rs each
+  schedule: '00 08 * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scaleup
+              image: busybox:1.28
+              imagePullPolicy: IfNotPresent
+              command:
+                - <insert way to run scaleup.sh>
+              volumeMounts:
+                # This needs to be created
+                - name: scripts-dir
+                  mountPath: /scripts
+          restartPolicy: OnFailure
+          volumes:
+            # This needs to be created
+            - name: script-dir
+              hostPath:
+                path: /scripts
+                type: Directory
+              restartPolicy: OnFailure
