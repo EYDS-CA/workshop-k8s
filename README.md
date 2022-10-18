@@ -31,11 +31,13 @@ You are encouraged to not follow the exact steps we have used here, and to focus
 
 - From your terminal:
 
-  - Install azure cli:
+  - Install azure cli mac:
 
     ```bash
     brew update && brew install azure-cli
     ```
+
+  - Install azure cli windows [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 
   - Log-in to Azure using
     ```
@@ -108,12 +110,13 @@ You are encouraged to not follow the exact steps we have used here, and to focus
 
 ##### NAMESPACE
 
-- this should be the name of your kubernetes namespace on the cluster.
+- This should be the name of your kubernetes namespace on the cluster.
 
 ##### KUBE_CONFIG
 
-- should be the contents of `~/.kube/config` on your local machine - this has your credentials to connect to the cluster (previously configured).
-- assuming you have set the aks credentials locally, as well as the context for your namespace set, run `cat ~/.kube/config | pbcopy`
+- This is the contents of `~/.kube/config` on your local machine - this has your credentials to connect to the cluster (previously configured).
+- Assuming you have set the aks credentials locally, as well as the context for your namespace set, run `cat ~/.kube/config | pbcopy`
+- Paste this into a GH secret
 
 ##### ACR_PASSWORD
 
@@ -123,24 +126,20 @@ You are encouraged to not follow the exact steps we have used here, and to focus
 
 Deploy the official nginx image as found in the milestone 1 branch (no custom configuration, this is just the official docker image to ensure your automated deployments are working as expected)
 
-#### Auto-Deploy (reccomended):
+#### Deploy with github actions:
 
 - **\*Be sure you have checked out milestone-1**
-- First you need to update the makefile set the `NAMESPACE` environment variable to the name of your new namespace, e.g. `export NAMESPACE=milestones`.
-- Now you can try running `make apply` which _should_ deploy the infrastructure defined here.
+
 - Commit, push to milestone-1, and check your "actions"
 - You should see your project now live at `http://$NAMESPACE.k8s.freshworks.club`
 
-#### Deploy with Kubectl (optional):
+#### Run/Deploy Locally
 
-- Ensure the namespace context is set locally, and update any k8's file so that your namespace is properly added.
-- From project root:
+- We have set the GH secrets KUBE_CONFIG/NAMESPACE in the repo. If you want to run the project locally, you'll need to set the KUBE_CONFIG/NAMESPACE env vars locally as well.
+- ie: `export NAMESPACE=myname` and `export KUBE_CONFIG=$( cat ~/.kube/config)`
+- Now you can try running `make apply` which _should_ deploy the infrastructure defined here.
 
-```
-  kubectl apply -f k8s
-```
-
-#### Deploy From the azure site (optional):
+#### Deploy From the azure site:
 
 - Visit the learning-sandbox azure site
 - Go to the sandbox cluster, select the resource you want to create (see list below), choose to "create from yaml" and copy/paste the corresponding yaml files.
