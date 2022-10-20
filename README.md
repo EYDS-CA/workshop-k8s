@@ -17,7 +17,7 @@ You are encouraged to not follow the exact steps we have used here, and to focus
 
 #### Initial Set Up:
 
-Kubernetes resources can be created in a number of different ways. In this milestone, we will focus on using autodeployment via GitHub actions, which we have already configured in this repositorysitory. The following steps will configure the .kube/config file on your local device, and you will use the contents of this file as your `KUBE_CONFIG` GitHub secret. 
+Azure/Kubernetes resources are created in several ways. In this milestone, we will focus on using autodeployment via GitHub actions, which we have already configured in this repositorysitory. The following steps will configure the .kube/config file on your local device, and you will use the contents of this file as your `KUBE_CONFIG` GitHub secret. 
 
 #### Get the source code: 
  Either fork, or, clone and then set the remote origin to a new repository in your own GitHub account to use the source files from this repository. 
@@ -39,15 +39,17 @@ You'll want to verify that you can access the azure portal prior to proceeding.
 
   - Access the portal [here](https://portal.azure.com/#@EYGS.onmicrosoft.com/resource/subscriptions/ec7d31e7-d1df-465e-b131-1d1fe4178fc4/resourcegroups/learning-sandbox/providers/Microsoft.ContainerService/managedClusters/sandbox/overview).
 
-Now that you have confirmed access, you will need to install the azure cli, authenticate local via the terminal, and copy the contents of the generated ~/.kube/config file into a GitHub secret
+Now that you have confirmed access, you will need to install the azure cli to authenticate locally and copy the contents of the generated ~/.kube/config file into a GitHub secret
 
-  - Install azure cli (on mac):
+  **Install azure cli (on mac):**
 
   ```bash
   brew update && brew install azure-cli
   ```
 
-  - Install azure cli (on windows) instructions can be found [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+  **Install azure cli (on windows):** 
+  
+  - Instructions can be found [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 
   Once the installation is complete, you should be able to log in via your terminal
 
@@ -55,7 +57,7 @@ Now that you have confirmed access, you will need to install the azure cli, auth
   az login
   ```
 
-  You will be redirected to the browser, and you'll see some information printed out in the console informing you of the redirect. Continue this process in the browser (edge) with your ey credentials. 
+  You will be redirected to the browser. Continue to login with your ey credentials. 
 
   Once you have authenticated, you can proceed with local configuration:
   
@@ -63,7 +65,7 @@ Now that you have confirmed access, you will need to install the azure cli, auth
     ```
     az account set --subscription ec7d31e7-d1df-465e-b131-1d1fe4178fc4
     ```
-- note: if you're on an EY mac you may need to install the admin riGitHubts tool prior to executing these commands. 
+- note: if you're on an EY mac you may need to install the admin rights tool prior to executing these commands. 
 
 - Set your az credentials in your local .kube/config:
   ```
@@ -134,7 +136,7 @@ If you plan to push an image from your local machine to the container registry, 
 
 At this point, your GitHub repositorysitory should contain the three secrets needed to build and deploy resources to the azure sandbox cluster. In milestone 1 you will be deploying the official nginx image with no custom configuration. The GitHub action file `deploy.yml` will run when you push to the milestone-1 branch. 
 
-- Save, commit, and push to your repositorysitory
+- Save, commit, and push to your repository
 
 You should see your project now live at `http://$NAMESPACE.k8s.freshworks.club`
 
@@ -142,11 +144,11 @@ You should see your project now live at `http://$NAMESPACE.k8s.freshworks.club`
 
 *Optional:*
 
-You can also create resources locally, or directly within the azure portal. 
+You can also create resources locally, or from within the azure portal (in the sandbox azure site). 
 
 ##### Local:
 
-- First, ensure you have set a namespace variable set locally ie: `export NAMESPACE=<your namespace>` 
+- First, update .env with your namespace
 - Now you can try running `make apply` which _should_ deploy the infrastructure defined here.
 
 ##### Azure Portal:
@@ -161,6 +163,12 @@ You can also create resources locally, or directly within the azure portal.
   - The corresponding files can be found in the k8's directory
 
 ### Useful commands
+
+- Create resources:
+
+```
+  kubectl apply -f k8s -n <yournamespace>
+```
 
 - See a list of your resources:
 
