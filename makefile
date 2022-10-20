@@ -1,9 +1,9 @@
-
+include .env
 ifndef NAMESPACE
 $(error NAMESPACE env var not set)
 endif
 
-ACR_REPO = eydscasandbox.azurecr.io/milestones
+
 
 apply:
 	# Applying every kubernetes file, substituting in any environment variables
@@ -12,7 +12,7 @@ apply:
 	done
 
 nginx-build: 
-	docker build -t $(ACR_REPO)/custom-nginx:latest ./services/custom-nginx
+	docker build -t $(ACR_REPO)/$(NAMESPACE)/$(IMAGE):latest ./services/custom-nginx
 
 nginx-push: nginx-build
-	docker push $(ACR_REPO)/custom-nginx:latest
+	docker push $(ACR_REPO)/$(NAMESPACE)/$(IMAGE):latest
