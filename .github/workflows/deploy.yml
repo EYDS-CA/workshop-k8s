@@ -1,9 +1,9 @@
 name: PR checks
 on:
   push:
-    tags: 
+    branches: ['milestone-1']
     # Typically for tag-based deployment you would have one tag per environment, e.g. dev/test/prod
-      - dev
+  workflow_dispatch:
 
 env:
   # Please change this to the name of your kubernetes namespace
