@@ -17,7 +17,7 @@ You are encouraged to not follow the exact steps we have used here, and to focus
 
 #### Initial Set Up:
 
-Azure/Kubernetes resources are created in several ways. In this milestone, we will focus on using autodeployment via GitHub actions, which we have already configured in this repositorysitory. The following steps will configure the .kube/config file on your local device, and you will use the contents of this file as your `KUBE_CONFIG` GitHub secret. 
+Azure/Kubernetes resources are created in several ways. In this milestone, we will focus on using autodeployment via GitHub actions, which we have already configured in this repository. The following steps will configure the .kube/config file on your local device, and you will use the contents of this file as your `KUBE_CONFIG` GitHub secret. 
 
 #### Get the source code: 
  Either fork, or, clone and then set the remote origin to a new repository in your own GitHub account to use the source files from this repository. 
@@ -121,7 +121,7 @@ Now that you have authenticated with azure, configured your local .kube/config f
 
 *Optional:*
 
-If you plan to push an image from your local machine to the container registry, you'll first need to authenticate. This step will happen in the repositorysitory automatically, but you may want to know how to do this. 
+If you plan to push an image from your local machine to the container registry, you'll first need to authenticate. This step will happen in the repository automatically, but you may want to know how to do this. 
 - Log in to the container registry
 
     ```
@@ -134,7 +134,7 @@ If you plan to push an image from your local machine to the container registry, 
 
 #### Build and Deploy
 
-At this point, your GitHub repositorysitory should contain the three secrets needed to build and deploy resources to the azure sandbox cluster. In milestone 1 you will be deploying the official nginx image with no custom configuration. The GitHub action file `deploy.yml` will run when you push to the milestone-1 branch. 
+At this point, your GitHub repository should contain the three secrets needed to build and deploy resources to the azure sandbox cluster. In milestone 1 you will be deploying the official nginx image with no custom configuration. The GitHub action file `deploy.yml` will run when you push to the milestone-1 branch. 
 
 - Save, commit, and push to your repository
 

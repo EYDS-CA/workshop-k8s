@@ -1,16 +1,17 @@
-name: PR checks
+name: Deploy
 on:
   push:
     branches: ['milestone-1']
     # Typically for tag-based deployment you would have one tag per environment, e.g. dev/test/prod
-  workflow_dispatch:
+      
 
 env:
   # Please change this to the name of your kubernetes namespace
   NAMESPACE: ${{ secrets.NAMESPACE }}
 
 jobs:
-  pr-checks:
+  build-and-deploy:
+    name: Build and deploy
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
